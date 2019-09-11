@@ -1,0 +1,724 @@
+[
+  {
+    "menusGroupName": "常规功能",
+    "menus": [
+      {
+        "caption": "群聊",
+        "order": "1",
+        "target": "com.jszc.mobile.videostream.demo.superroom.SuperRoomListFragment",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_qunliao"
+      },
+      {
+        "caption": "督办",
+        "order": "1",
+        "target": "com.jszc.mobile.event.fragment.SuperviseFragment",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_duban"
+      },
+      {
+        "caption": "问题上报",
+        "order": "1",
+        "target": "com.jszc.mobile.event.eventfragment.EventBrowseFragment",
+        "pkId": "1",
+        "description": "001002",
+        "level": "",
+        "icon": "icon_caseup"
+      },
+      {
+        "caption": "移动办公",
+        "order": "1",
+        "target": "com.jszc.mobile.office.officeFragment.MobileOfficeBrowseFragement",
+        "pkId": "1",
+        "description": "001003",
+        "level": "",
+        "icon": "icon_mobile_office"
+      },
+
+      {
+        "caption": "任务中心",
+        "order": "1",
+        "target": "com.jszc.mobile.event.taskcenter.TaskBrowseFragment",
+        "pkId": "1",
+        "description": "001002",
+        "level": "",
+        "icon": "icon_task_center"
+      },
+      {
+        "caption": "综合查询",
+        "order": "1",
+        "target": "com.jszc.mobile.office.officeFragment.CaseQueryBrowseFragment",
+        "pkId": "1",
+        "description": "001007",
+        "level": "",
+        "icon": "icon_task_center"
+      },
+      {
+        "caption": "语音播报",
+        "order": "1",
+        "target": "com.jszc.mobile.voice.VoiceFragment",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_instant_message"
+      },
+      {
+        "caption": "实时对讲",
+        "order": "1",
+        "target": "com.jszc.mobile.contact.fragment.ContactBrowseFragment",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_real_time_talk"
+      },
+      {
+        "caption": "系统设置",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_system_setting"
+      },
+      {
+        "caption": "移动考勤",
+        "order": "1",
+        "target": "com.jszc.mobile.attend.fragment.MobileAttendFragment",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_signin"
+      },
+      {
+        "caption": "工作日志",
+        "order": "1",
+        "target": "com.jszc.mobile.log.fragment.WorkLogCaseUpFragment",
+        "pkId": "1",
+        "description": "001001",
+        "level": "",
+        "icon": "icon_log_mgr"
+      },
+      {
+        "caption": "工作日程",
+        "order": "1",
+        "target": "com.jszc.mobile.calendar.fragment.WorkCalendarFragment",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_work_plan"
+      },
+      {
+        "caption": "法律法规",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_law_rule"
+      },
+      {
+        "caption": "采集记录",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_coll_history"
+      },
+      {
+        "caption": "我的草稿",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_my_draft"
+      }
+    ]
+  },
+  {
+    "menusGroupName": "城管通组件",
+    "menus": [
+      {
+        "caption": "核实核查",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_verify_check"
+      },
+      {
+        "caption": "历史记录",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_history"
+      },
+      {
+        "caption": "今日提醒",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_prompt"
+      },
+      {
+        "caption": "单键拨号",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_dialing"
+      },
+      {
+        "caption": "案件查询",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_case_distribution"
+      },
+      {
+        "caption": "系统帮助",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_help"
+      }
+    ]
+  },
+  {
+    "menusGroupName": "领导通组件",
+    "menus": [
+      {
+        "caption": "关注件箱",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_focus_box"
+      },
+      {
+        "caption": "领导上报",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_caseup"
+      },
+      {
+        "caption": "急要件箱",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_urgent_box"
+      },
+      {
+        "caption": "超时件查询",
+        "order": "1",
+        "target": "com.jszc.mobile.office.officeFragment.OverTimeBrowseFragement",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_overtime_box"
+      },
+      {
+        "caption": "督办件箱",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_supervise_box"
+      },
+      {
+        "caption": "领导交办",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_leader_entrust"
+      },
+      {
+        "caption": "评价考核",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_evaluate_check"
+      },
+      {
+        "caption": "案件查询",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_case_distribution"
+      },
+      {
+        "caption": "队伍监管",
+        "order": "1",
+        "target": "com.jszc.mobile.map_plug.bdmap.fragment.SuperviserCheckFragment",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_rank_supervise"
+      }
+    ]
+  },
+  {
+    "menusGroupName": "执法通组件",
+    "menus": [
+      {
+        "caption": "简易程序上报",
+        "order": "1",
+        "target": "com.jszc.mobile.event.eventfragment.EventBrowseFragment",
+        "pkId": "1",
+        "description": "001010",
+        "level": "",
+        "icon": "icon_simple_report"
+      },
+      {
+        "caption": "一般程序上报",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_common_report"
+      },
+      {
+        "caption": "现场取证",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_spot_prove"
+      },
+      {
+        "caption": "任务处理",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_task_handle"
+      },
+      {
+        "caption": "案件处置反馈",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_case_reflect"
+      },
+      {
+        "caption": "法律法规",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_law_rule"
+      },
+      {
+        "caption": "文书打印",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_text_printing"
+      },
+      {
+        "caption": "审批、许可信息",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_show_info"
+      },
+      {
+        "caption": "执法教学",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_law_teach"
+      },
+      {
+        "caption": "证物二维码管理",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_code_manage"
+      }
+    ]
+  },
+  {
+    "menusGroupName": "处置通组件",
+    "menus": [
+      {
+        "caption": "待办案件",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_upcoming"
+      },
+      {
+        "caption": "经办案件",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_handle_case"
+      },
+      {
+        "caption": "查看办理进度",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_show_progress"
+      }
+    ]
+  },
+  {
+    "menusGroupName": "考核评价",
+    "menus": [
+      {
+        "caption": "考评任务接收",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_evaluate_receive"
+      },
+      {
+        "caption": "考评任务上报",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_evaluate_report"
+      },
+      {
+        "caption": "历史记录",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_history"
+      },
+      {
+        "caption": "案卷统计",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_part_update"
+      },
+      {
+        "caption": "案卷分布",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_caseup_distribute"
+      },
+      {
+        "caption": "部门统计",
+        "order": "1",
+        "target": "com.jszc.mobile.departanalysis.DepartmentsAccessFragment",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_part_statis"
+      },
+      {
+        "caption": "频发统计",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_send_statis"
+      },
+      {
+        "caption": "监督员分布",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_moving_enforce"
+      }
+    ]
+  },
+  {
+    "menusGroupName": "环卫通组件",
+    "menus": [
+      {
+        "caption": "车辆监管",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_car_manage"
+      },
+      {
+        "caption": "公厕监管",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_toilet_manage"
+      },
+      {
+        "caption": "垃圾桶监管",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_trash_manage"
+      },
+      {
+        "caption": "中转站监管",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_station_manage"
+      },
+      {
+        "caption": "计量监管",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_meter_manage"
+      },
+      {
+        "caption": "视频监管",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_view_manage"
+      },
+      {
+        "caption": "垃圾分类监管",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_trash_type_manage"
+      }
+    ]
+  },
+  {
+    "menusGroupName": "建筑垃圾管理组件",
+    "menus": [
+      {
+        "caption": "渣土车辆查询",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_car_query"
+      },
+      {
+        "caption": "“黑车”辨别查询",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_identify_query"
+      }
+    ]
+  },
+  {
+    "menusGroupName": "广告监管组件",
+    "menus": [
+      {
+        "caption": "广告点位分布",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_advert_place"
+      },
+      {
+        "caption": "广告审批内容",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_advert_query"
+      }
+    ]
+  },
+  {
+    "menusGroupName": "流动摊贩监管组件",
+    "menus": [
+      {
+        "caption": "流动摊点登记",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_booth_register"
+      },
+      {
+        "caption": "二维码扫描",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_code_query"
+      }
+    ]
+  },
+  {
+    "menusGroupName": "其他",
+    "menus": [
+      {
+        "caption": "人房管理",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_house_manage"
+      },
+      {
+        "caption": "数据更新",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_data_update"
+      },
+      {
+        "caption": "专项普查",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_spe_look"
+      },
+      {
+        "caption": "发件箱",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_sendbox"
+      },
+      {
+        "caption": "联系人",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_contact_person"
+      },
+      {
+        "caption": "部件更新",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_part_update"
+      },
+      {
+        "caption": "部件查询",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_parts_query"
+      },
+      {
+        "caption": "部件添加",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_parts_add"
+      },
+      {
+        "caption": "部件删除",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_parts_delete"
+      },
+      {
+        "caption": "部件编辑",
+        "order": "1",
+        "target": "",
+        "pkId": "1",
+        "description": "",
+        "level": "",
+        "icon": "icon_parts_edit"
+      }
+    ]
+  }
+]
