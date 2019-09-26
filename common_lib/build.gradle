@@ -22,7 +22,7 @@ android {
     }
 
 }
-
+def qmui_arch_version = '0.6.1'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -30,4 +30,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    api 'org.greenrobot:eventbus:3.1.1'
+    api 'com.qmuiteam:qmui:1.4.0'
+    api "com.qmuiteam:arch:$qmui_arch_version"
+    annotationProcessor "com.qmuiteam:arch-compiler:$qmui_arch_version" // use annotationProcessor if java
+    // 图片压缩
+    api 'top.zibin:Luban:1.1.8'
+
 }
