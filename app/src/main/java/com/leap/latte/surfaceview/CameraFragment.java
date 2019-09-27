@@ -15,7 +15,6 @@ import org.greenrobot.eventbus.EventBus;
 public class CameraFragment extends QMUIFragment {
 
     public CameraFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -35,6 +34,5 @@ public class CameraFragment extends QMUIFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 }
