@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.leap.latte.surfaceview.CameraSurfaceView
+    <com.leap.latte.camera.CameraSurfaceView
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <RelativeLayout

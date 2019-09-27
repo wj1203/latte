@@ -1,4 +1,4 @@
-package com.leap.latte.surfaceview;
+package com.leap.latte.camera;
 
 import android.content.Context;
 import android.hardware.Camera;
@@ -53,6 +53,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
     public void surfaceCreated(SurfaceHolder holder) {
         if (mCamera == null) {
             mCamera = Camera.open();
+        }else {
         }
         try {
             mCamera.setPreviewDisplay(surfaceHolder);
@@ -77,15 +78,16 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         //  获取支持的PictureSize
         List<Camera.Size> pictureSizeList = parameters.getSupportedPictureSizes();
         //  通过surface的高宽比获取最合适的 Camera.Size
-        Camera.Size size = getProperSize(pictureSizeList, height / width);
+        Camera.Size size = getProperSize(pictureSizeList, (float) height / width);
         if (null == size) {
             // 如果没有使用设置的size
             size = parameters.getPictureSize();
         }
-        // 根据选中的size设置surfaceView大小
+        // 根据选中的size设置相机图片大小
         float w = size.width;
         float h = size.height;
         parameters.setPictureSize(size.width, size.height);
+        // 根据选中的size设置surfaceView大小
         this.setLayoutParams(new FrameLayout.LayoutParams((int) (height * (h / w)), height));
         // 获取摄像头支持的PreviewSize列表
         List<Camera.Size> previewSizeList = parameters.getSupportedPreviewSizes();
@@ -93,8 +95,8 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         if (null != preSize) {
             parameters.setPreviewSize(preSize.width, preSize.height);
         }
-
         parameters.setJpegQuality(100); // 设置照片质量
+        // 设置相机模式
         if (parameters.getSupportedFocusModes().contains(android.hardware.Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
             parameters.setFocusMode(android.hardware.Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);// 连续对焦模式
         }
@@ -102,10 +104,9 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         mCamera.cancelAutoFocus();//自动对焦。
         mCamera.setDisplayOrientation(90);// 设置PreviewDisplay的方向，效果就是将捕获的画面旋转多少度显示
         mCamera.setParameters(parameters);
+        // 相机每一帧的回调
         mCamera.setPreviewCallback(this);
-
         mCamera.startPreview();
-
     }
 
     /**
@@ -115,6 +116,18 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
      */
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        try {
+            //解决java.lang.RuntimeException: Camera is being used after Camera.release() was called异常
+            holder.removeCallback(this);
+            mCamera.setPreviewCallback(null);
+            mCamera.stopPreview();
+            mCamera.release();
+            mCamera = null;
+            holder = null;
+
+        }catch (Exception e){
+
+        }
 
     }
 
@@ -133,7 +146,6 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
                 break;
             }
         }
-
         if (null == result) {
             for (Camera.Size size : pictureSizeList) {
                 float curRatio = ((float) size.width) / size.height;
@@ -159,7 +171,14 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
-        Log.d("5415", data.length + "");
+        //  人脸检测
+        camera.startFaceDetection();
+        camera.setFaceDetectionListener(new Camera.FaceDetectionListener() {
+            @Override
+            public void onFaceDetection(Camera.Face[] faces, Camera camera) {
+                Log.d("5415",faces[0].score+"");
+            }
+        });
 
     }
 }

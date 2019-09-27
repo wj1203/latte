@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.leap.latte.surfaceview.CameraFragment;
+import com.leap.latte.camera.CameraFragment;
 
 public class MainActivity extends AppCompatActivity {
 

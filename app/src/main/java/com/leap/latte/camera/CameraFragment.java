@@ -1,4 +1,4 @@
-package com.leap.latte.surfaceview;
+package com.leap.latte.camera;
 
 
 import android.support.v4.app.Fragment;
@@ -7,7 +7,6 @@ import android.view.View;
 import com.leap.latte.R;
 import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * A simple {@link Fragment} subclass.
