@@ -1,15 +1,12 @@
-package com.leap.latte.camera;
+package com.leap.latte.camera.view;
 
 import android.content.Context;
 import android.hardware.Camera;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.FrameLayout;
-
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -20,7 +17,7 @@ import java.util.List;
 @SuppressWarnings("ALL")
 public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Callback, Camera.PreviewCallback {
 
-    private Camera mCamera;
+    public Camera mCamera;
     private Context mContext;
 
     private int screenWidth;
@@ -61,6 +58,8 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
             e.printStackTrace();
         }
     }
+
+
 
     /**
      * @param holder The SurfaceHolder whose surface has changed.
@@ -169,16 +168,27 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         return result;
     }
 
+    private byte[] picBytes;
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
         //  人脸检测
-        camera.startFaceDetection();
-        camera.setFaceDetectionListener(new Camera.FaceDetectionListener() {
-            @Override
-            public void onFaceDetection(Camera.Face[] faces, Camera camera) {
-                Log.d("5415",faces[0].score+"");
-            }
-        });
+//        camera.startFaceDetection();
+//        camera.setFaceDetectionListener(new Camera.FaceDetectionListener() {
+//            @Override
+//            public void onFaceDetection(Camera.Face[] faces, Camera camera) {
+//                Log.d("5415",faces.length+"");
+//            }
+//        });
 
+        //  拿到照片byte
+        picBytes = data;
     }
+
+
+
+    public byte[] takePhoto(){
+        mCamera.stopPreview();
+        return picBytes;
+    }
+
 }

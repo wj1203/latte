@@ -25,7 +25,7 @@ public class BaseApp extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = this;
-        crashIntercept();
+//        crashIntercept();
         QMUISwipeBackActivityManager.init(this);
     }
 

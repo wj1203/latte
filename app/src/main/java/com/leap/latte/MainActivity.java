@@ -5,22 +5,28 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.leap.latte.camera.CameraFragment;
+import com.leap.common_lib.BaseActivity;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
+
+    @Override
+    protected int getContextViewId() {
+        return R.id.rlContainer;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        QMUIStatusBarHelper.setStatusBarDarkMode(this);
         getPermission();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.rlContainer,new CameraFragment());
+        transaction.add(R.id.rlContainer,new MainFragment());
         transaction.commit();
     }
 

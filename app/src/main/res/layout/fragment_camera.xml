@@ -3,14 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.leap.latte.camera.CameraSurfaceView
+    <com.leap.latte.camera.view.CameraSurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <com.leap.latte.camera.view.CameraRectView
+        android:id="@+id/rectView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <Button
-            android:id="@+id/takePic"
+            android:id="@+id/btnPhoto"
             android:layout_width="80dp"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
