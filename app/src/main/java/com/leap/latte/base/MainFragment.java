@@ -1,4 +1,4 @@
-package com.leap.latte;
+package com.leap.latte.base;
 
 
 import android.support.v4.app.Fragment;
@@ -8,17 +8,22 @@ import android.widget.Button;
 
 import com.bumptech.glide.Glide;
 import com.leap.common_lib.BaseFragment;
+import com.leap.latte.R;
 import com.leap.latte.camera.fragment.CameraFragment;
+import com.leap.latte.recyclerview.RecyclerFragment;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ *
  */
 public class MainFragment extends BaseFragment implements View.OnClickListener {
 
     private QMUITopBar topBar;
+
     private Button btnCamera;
+    private Button btnRecyclerView;
 
     @Override
     protected View onCreateView() {
@@ -30,11 +35,14 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     private void initView(View view) {
         topBar = view.findViewById(R.id.topBar);
         btnCamera = view.findViewById(R.id.btnCamera);
+        btnRecyclerView = view.findViewById(R.id.btnRecyclerView);
+
 
         topBar.setTitle("latte主页");
 
+
         btnCamera.setOnClickListener(this);
-        
+        btnRecyclerView.setOnClickListener(this);
 
     }
 
@@ -46,6 +54,15 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
                 startFragment(cameraFragment);
                 break;
 
+            case R.id.btnRecyclerView:
+                startFragment(new RecyclerFragment());
+                break;
+
         }
+    }
+
+    @Override
+    protected void onBackPressed() {
+        getActivity().finish();
     }
 }
