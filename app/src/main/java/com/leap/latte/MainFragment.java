@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
+import com.bumptech.glide.Glide;
 import com.leap.common_lib.BaseFragment;
 import com.leap.latte.camera.fragment.CameraFragment;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -33,7 +34,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         topBar.setTitle("latte主页");
 
         btnCamera.setOnClickListener(this);
-
+        
 
     }
 
