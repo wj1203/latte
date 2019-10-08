@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.leap.common_lib.BaseFragment;
+import com.leap.latte.base.MainFragment;
 import com.leap.latte.R;
 import com.leap.latte.camera.view.CameraRectView;
 import com.leap.latte.camera.view.CameraSurfaceView;
@@ -70,8 +71,14 @@ public class CameraFragment extends BaseFragment {
         this.onDetach();
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    protected void onBackPressed() {
+        startFragment(new MainFragment());
     }
 }

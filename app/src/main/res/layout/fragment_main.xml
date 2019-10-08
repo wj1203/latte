@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainFragment">
+    tools:context=".base.MainFragment">
     <com.qmuiteam.qmui.widget.QMUITopBar
         android:id="@+id/topBar"
         android:layout_width="match_parent"
@@ -14,11 +14,22 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <Button
-            android:id="@+id/btnCamera"
-            android:text="相机"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/btnCamera"
+                android:text="@string/camera"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/btnRecyclerView"
+                android:text="@string/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
     </ScrollView>
 
 
