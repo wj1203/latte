@@ -9,6 +9,7 @@ import com.leap.common_lib.crash.UnexitCrash;
 import com.leap.common_lib.thread.ThreadPoolManager;
 import com.leap.common_lib.util.DeviceUtil;
 import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
+import com.squareup.leakcanary.LeakCanary;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,7 +27,15 @@ public class BaseApp extends Application {
         super.onCreate();
         mContext = this;
 //        crashIntercept();
+        leakCanary();
         QMUISwipeBackActivityManager.init(this);
+    }
+
+    private void leakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
     }
 
     private void crashIntercept() {

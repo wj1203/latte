@@ -10,6 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </com.qmuiteam.qmui.widget.QMUITopBar>
+    <com.leap.latte.recyclerview.scrollRecycler.ScrollRecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.leap.latte.recyclerview.scrollRecycler.ScrollRecyclerView>
 
 
 
