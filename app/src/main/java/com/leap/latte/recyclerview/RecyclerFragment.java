@@ -14,6 +14,7 @@ import com.qmuiteam.qmui.widget.QMUITopBar;
  * */
 public class RecyclerFragment extends BaseFragment {
     private QMUITopBar topBar;
+    private RecyclerView recyclerView;
 
 
 
@@ -25,7 +26,6 @@ public class RecyclerFragment extends BaseFragment {
     }
 
     private void initView(View view) {
-        RecyclerView.ItemDecoration itemDecoration;
         topBar = view.findViewById(R.id.topBar);
         topBar.setTitle("Recycler 展示");
         topBar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
@@ -34,6 +34,7 @@ public class RecyclerFragment extends BaseFragment {
                 startFragment(new MainFragment());
             }
         });
+        recyclerView = view.findViewById(R.id.recyclerView);
     }
 
 }
