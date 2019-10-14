@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.leap.common_lib.BaseFragment;
 import com.leap.latte.R;
+import com.leap.latte.assignment.AssignFragment;
 import com.leap.latte.camera.fragment.CameraFragment;
 import com.leap.latte.recyclerview.RecyclerFragment;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -23,6 +24,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
 
     private Button btnCamera;
     private Button btnRecyclerView;
+    private Button btnAssignment;
 
     @Override
     protected View onCreateView() {
@@ -35,13 +37,14 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         topBar = view.findViewById(R.id.topBar);
         btnCamera = view.findViewById(R.id.btnCamera);
         btnRecyclerView = view.findViewById(R.id.btnRecyclerView);
-
+        btnAssignment = view.findViewById(R.id.btnAssignment);
 
         topBar.setTitle("latte主页");
 
 
         btnCamera.setOnClickListener(this);
         btnRecyclerView.setOnClickListener(this);
+        btnAssignment.setOnClickListener(this);
 
     }
 
@@ -55,6 +58,9 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
 
             case R.id.btnRecyclerView:
                 startFragment(new RecyclerFragment());
+                break;
+            case R.id.btnAssignment:
+                startFragment(new AssignFragment());
                 break;
 
         }
