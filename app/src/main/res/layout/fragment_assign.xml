@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_weight="15"
+            android:layout_height="match_parent">
+            <com.leap.latte.assignment.view.RotateTextView
+                android:layout_marginBottom="120dp"
+                android:background="@drawable/item_click"
+                android:id="@+id/rtvClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </com.leap.latte.assignment.view.RotateTextView>
+
+            <com.leap.latte.assignment.view.RotateTextView
+                android:layout_marginTop="120dp"
+                android:background="@drawable/item_click"
+                android:id="@+id/rtvSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </com.leap.latte.assignment.view.RotateTextView>
+        </LinearLayout>
+
+        <com.leap.latte.assignment.view.AssignmentView
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_weight="85"
+            android:layout_height="match_parent"
+            android:layout_width="0dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

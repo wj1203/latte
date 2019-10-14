@@ -5,4 +5,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="camera">相机</string>
     <string name="recyclerView">Recycler View</string>
+    <string name="assignment">手写签名功能</string>
 </resources>
