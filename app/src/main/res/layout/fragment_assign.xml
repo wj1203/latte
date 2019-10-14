@@ -31,6 +31,7 @@
         </LinearLayout>
 
         <com.leap.latte.assignment.view.AssignmentView
+            android:id="@+id/assignmentView"
             android:clickable="true"
             android:focusable="true"
             android:layout_weight="85"

@@ -5,14 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-
-import com.leap.latte.assignment.DrawPoint;
 
 import java.util.ArrayList;
 
@@ -34,6 +31,7 @@ public class AssignmentView extends View {
     private int strokeWidth;
 
     private Paint rectPaint;
+    private Paint linePaint;
 
     private int viewHeight;
     private int viewWidth;
@@ -44,7 +42,6 @@ public class AssignmentView extends View {
 
     private Rect rect;
 
-    private ArrayList<DrawPoint> pointList = new ArrayList<>();
 
     private Path drawPath;
 
@@ -68,42 +65,46 @@ public class AssignmentView extends View {
         rectPaint.setStyle(Paint.Style.STROKE);  // 设置绘制图像为空心，Fill是实心
         rectPaint.setStrokeWidth(5);
         rectPaint.setColor(Color.RED);
+
+        linePaint = new Paint();
+        linePaint.setAntiAlias(false);
+        linePaint.setStyle(Paint.Style.STROKE);
+        linePaint.setStrokeWidth(8);
+        linePaint.setColor(Color.BLACK);
         // 初始化线
         drawPath = new Path();
 
     }
 
-    private float cur_x, cur_y;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                Log.d("5415 down x", String.valueOf(event.getX()));
-                Log.d("5415 down y", String.valueOf(event.getY()));
-                pointList.add(new DrawPoint(event.getX(),event.getY()));
                 drawPath.moveTo(x, y);
                 break;
             case MotionEvent.ACTION_MOVE:
-                Log.d("5415 move x", String.valueOf(event.getX()));
-                Log.d("5415 move y", String.valueOf(event.getY()));
-                pointList.add(new DrawPoint(event.getX(),event.getY()));
-                drawPath.quadTo(cur_x, cur_y, x, y);
+                drawPath.lineTo(x, y);
                 break;
             case MotionEvent.ACTION_UP:
-                Log.d("5415 up x", String.valueOf(event.getX()));
-                Log.d("5415 up y", String.valueOf(event.getY()));
-                pointList.add(new DrawPoint(event.getX(),event.getY()));
+                drawPath.setLastPoint(x,y);
                 break;
         }
         invalidate();
         return true;
     }
 
+    Boolean isClear = false;
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if (isClear){
+            canvas.drawColor(Color.WHITE, PorterDuff.Mode.CLEAR);
+            isClear = false;
+        }
+
+
         viewWidth = getMeasuredWidth();
         viewHeight = getMeasuredHeight();
         viewLeft = getLeft();
@@ -114,7 +115,11 @@ public class AssignmentView extends View {
         rect = new Rect(0,getTop(),getRight()-getLeft(),getBottom()-getTop());
         canvas.drawRect(rect,rectPaint);
         // 线
-        canvas.drawPath(drawPath,rectPaint);
+        canvas.drawPath(drawPath,linePaint);
+    }
 
+    public void clear(){
+        isClear = true;
+        invalidate();
     }
 }
