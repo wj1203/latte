@@ -53,7 +53,6 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
                 CameraFragment cameraFragment = new CameraFragment();
                 startFragment(cameraFragment);
                 break;
-
             case R.id.btnRecyclerView:
                 startFragment(new RecyclerFragment());
                 break;

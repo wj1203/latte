@@ -15,7 +15,6 @@ public class RotateTextViewHolder extends LinearLayout {
 
     private Context context;
 
-
     public RotateTextViewHolder(Context context) {
         super(context);
         init(context);

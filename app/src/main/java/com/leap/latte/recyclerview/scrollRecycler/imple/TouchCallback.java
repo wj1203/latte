@@ -1,4 +1,4 @@
-package com.leap.latte.recyclerview.scrollRecycler;
+package com.leap.latte.recyclerview.scrollRecycler.imple;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +11,12 @@ import android.support.v7.widget.helper.ItemTouchHelper;
  *   自定义Touch回调
  */
 public class TouchCallback extends ItemTouchHelper.Callback{
+
+    private TouchRecyclerAdapter mAdapter;
+
+    public TouchCallback(TouchRecyclerAdapter adapter) {
+        this.mAdapter = adapter;
+    }
 
     /**用于设置是否处理拖拽事件和滑动事件，以及拖拽和滑动操作的方向，*/
     @Override
@@ -26,7 +32,11 @@ public class TouchCallback extends ItemTouchHelper.Callback{
      * 我们就在这个方法里获取当前拖拽的item和已经被拖拽到所处位置的item的ViewHolder。*/
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-        return false;
+        if (viewHolder.getItemViewType() != target.getItemViewType()) {
+            return false;
+        }
+        mAdapter.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+        return true;
     }
 
     /**如果我们设置了相关的swipeFlags，
@@ -34,7 +44,7 @@ public class TouchCallback extends ItemTouchHelper.Callback{
      * 一般的话在使用LinearLayoutManager的时候，在这个方法里可以删除item，来实现滑动删除！*/
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-
+        mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
     }
 
     /**是否开启长按拖拽 （默认开启）*/
@@ -53,6 +63,11 @@ public class TouchCallback extends ItemTouchHelper.Callback{
      * 通常这个方法里我们可以改变选中item的背景颜色等，高亮表示选中来提高用户体验。*/
     @Override
     public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
+        if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
+            TouchRecyclerAdapter.Holder itemViewHolder = (TouchRecyclerAdapter.Holder) viewHolder;
+            //回调改变item的背景颜色
+            itemViewHolder.onItemSelected();
+        }
         super.onSelectedChanged(viewHolder, actionState);
         // actionStated的可选值
         //ACTION_STATE_IDLE：闲置状态
@@ -64,5 +79,8 @@ public class TouchCallback extends ItemTouchHelper.Callback{
     @Override
     public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
         super.clearView(recyclerView, viewHolder);
+        TouchRecyclerAdapter.Holder itemViewHolder = (TouchRecyclerAdapter.Holder) viewHolder;
+        //回调改变item的背景颜色
+        itemViewHolder.onItemClear();
     }
 }
