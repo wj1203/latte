@@ -3,41 +3,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
-    <LinearLayout
-        android:orientation="horizontal"
+    <com.leap.latte.assignment.view.AssignScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="0dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:layout_weight="15"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <com.leap.latte.assignment.view.RotateTextView
-                android:layout_marginBottom="120dp"
-                android:background="@drawable/item_click"
-                android:id="@+id/rtvClear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            </com.leap.latte.assignment.view.RotateTextView>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:layout_weight="15"
+                    android:layout_height="match_parent">
+                    <com.leap.latte.assignment.view.RotateTextViewHolder
+                        android:layout_marginBottom="120dp"
+                        android:background="@drawable/item_click"
+                        android:id="@+id/rtvClear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </com.leap.latte.assignment.view.RotateTextViewHolder>
 
-            <com.leap.latte.assignment.view.RotateTextView
-                android:layout_marginTop="120dp"
-                android:background="@drawable/item_click"
-                android:id="@+id/rtvSave"
+                    <com.leap.latte.assignment.view.RotateTextViewHolder
+                        android:layout_marginTop="120dp"
+                        android:background="@drawable/item_click"
+                        android:id="@+id/rtvSave"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </com.leap.latte.assignment.view.RotateTextViewHolder>
+                </LinearLayout>
+                <com.leap.latte.assignment.view.AssignmentView
+                    android:id="@+id/assignmentView"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_weight="85"
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp" />
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/ivResult"
+                android:src="@mipmap/ic_launcher"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            </com.leap.latte.assignment.view.RotateTextView>
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
-
-        <com.leap.latte.assignment.view.AssignmentView
-            android:id="@+id/assignmentView"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_weight="85"
-            android:layout_height="match_parent"
-            android:layout_width="0dp" />
-
-    </LinearLayout>
+    </com.leap.latte.assignment.view.AssignScrollView>
 
 </RelativeLayout>

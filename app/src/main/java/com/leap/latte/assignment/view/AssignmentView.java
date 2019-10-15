@@ -1,8 +1,11 @@
 package com.leap.latte.assignment.view;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
@@ -22,13 +25,8 @@ import java.util.ArrayList;
 public class AssignmentView extends View {
 
     private Context context;
-    private Paint paint;
     /**图片保存路径*/
     private String filePath;
-    /**画笔颜色*/
-    private int paintColor;
-    /**画笔宽度*/
-    private int strokeWidth;
 
     private Paint rectPaint;
     private Paint linePaint;
@@ -63,7 +61,7 @@ public class AssignmentView extends View {
         rectPaint = new Paint();
         rectPaint.setAntiAlias(false);       // 无锯齿
         rectPaint.setStyle(Paint.Style.STROKE);  // 设置绘制图像为空心，Fill是实心
-        rectPaint.setStrokeWidth(5);
+        rectPaint.setStrokeWidth(3);
         rectPaint.setColor(Color.RED);
 
         linePaint = new Paint();
@@ -82,12 +80,15 @@ public class AssignmentView extends View {
         float y = event.getY();
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
+                // Set the beginning of the next contour to the point (x,y)
                 drawPath.moveTo(x, y);
                 break;
             case MotionEvent.ACTION_MOVE:
+                // Add a line from the last point to the specified point (x,y).
                 drawPath.lineTo(x, y);
                 break;
             case MotionEvent.ACTION_UP:
+                // Sets the last point of the path.
                 drawPath.setLastPoint(x,y);
                 break;
         }
@@ -95,15 +96,9 @@ public class AssignmentView extends View {
         return true;
     }
 
-    Boolean isClear = false;
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (isClear){
-            canvas.drawColor(Color.WHITE, PorterDuff.Mode.CLEAR);
-            isClear = false;
-        }
-
 
         viewWidth = getMeasuredWidth();
         viewHeight = getMeasuredHeight();
@@ -111,15 +106,36 @@ public class AssignmentView extends View {
         viewRight = getRight();
         viewTop = getTop();
         viewBottom = getBottom();
-        // 矩形
+
+        // 矩形框
         rect = new Rect(0,getTop(),getRight()-getLeft(),getBottom()-getTop());
         canvas.drawRect(rect,rectPaint);
         // 线
         canvas.drawPath(drawPath,linePaint);
     }
 
+    /**
+     *  清除画板上的path
+     **/
     public void clear(){
-        isClear = true;
+        drawPath.reset();
         invalidate();
+    }
+
+    /**
+     * 保存签名图片
+     * */
+    public Bitmap save(Activity activity){
+        // 截取屏幕
+        Bitmap mScreenshot;
+        View activityView = activity.getWindow().getDecorView();
+        activityView.setDrawingCacheEnabled(true);
+        activityView.destroyDrawingCache();
+        activityView.buildDrawingCache();
+        mScreenshot = activityView.getDrawingCache();
+        // 返回 经过 裁剪矩形
+        Matrix matrix = new Matrix();
+        matrix.setRotate(270);
+        return Bitmap.createBitmap(mScreenshot,viewLeft,viewTop,viewWidth,viewHeight,matrix,true);
     }
 }
