@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_color_blue"
+    tools:context=".popup.PopUpFragment">
+    <RelativeLayout
+        android:background="@color/qmui_config_color_white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.qmuiteam.qmui.widget.QMUITopBar
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </com.qmuiteam.qmui.widget.QMUITopBar>
+    </RelativeLayout>
+
+</RelativeLayout>

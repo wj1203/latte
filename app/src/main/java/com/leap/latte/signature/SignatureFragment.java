@@ -8,14 +8,15 @@ import android.view.View;
 import android.widget.ImageView;
 import com.leap.common_lib.BaseFragment;
 import com.leap.latte.R;
+import com.leap.latte.base.MainFragment;
 import com.leap.latte.signature.view.SignatureView;
 import com.leap.latte.signature.view.RotateTextViewHolder;
+import com.qmuiteam.qmui.widget.QMUITopBar;
 
 public class SignatureFragment extends BaseFragment {
 
     private RotateTextViewHolder rtvClear;
     private RotateTextViewHolder rtvSave;
-
     private ImageView ivResult;
 
     private SignatureView signatureView;
@@ -53,4 +54,8 @@ public class SignatureFragment extends BaseFragment {
     }
 
 
+    @Override
+    protected void onBackPressed() {
+        startFragment(new MainFragment());
+    }
 }

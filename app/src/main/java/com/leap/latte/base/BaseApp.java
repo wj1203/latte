@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.leap.common_lib.cache.ACache;
 import com.leap.common_lib.crash.UnexitCrash;
 import com.leap.common_lib.thread.ThreadPoolManager;
 import com.leap.common_lib.util.DeviceUtil;
@@ -22,6 +23,8 @@ import java.util.Queue;
 
 public class BaseApp extends Application {
     public static Context mContext;
+
+    private static ACache aCache = null;
     @Override
     public void onCreate() {
         super.onCreate();

@@ -55,5 +55,9 @@ public class RecyclerFragment extends BaseFragment {
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(recyclerView);
     }
+    @Override
+    protected void onBackPressed() {
+        startFragment(new MainFragment());
+    }
 
 }

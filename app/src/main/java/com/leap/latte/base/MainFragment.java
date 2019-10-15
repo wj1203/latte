@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import com.leap.common_lib.BaseFragment;
 import com.leap.latte.R;
+import com.leap.latte.popup.PopUpFragment;
 import com.leap.latte.signature.SignatureFragment;
 import com.leap.latte.camera.fragment.CameraFragment;
 import com.leap.latte.recyclerview.RecyclerFragment;
@@ -23,6 +24,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     private Button btnCamera;
     private Button btnRecyclerView;
     private Button btnAssignment;
+    private Button btnPopUp;
 
     @Override
     protected View onCreateView() {
@@ -36,6 +38,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         btnCamera = view.findViewById(R.id.btnCamera);
         btnRecyclerView = view.findViewById(R.id.btnRecyclerView);
         btnAssignment = view.findViewById(R.id.btnAssignment);
+        btnPopUp = view.findViewById(R.id.btnPopUp);
 
         topBar.setTitle("latte主页");
 
@@ -43,6 +46,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         btnCamera.setOnClickListener(this);
         btnRecyclerView.setOnClickListener(this);
         btnAssignment.setOnClickListener(this);
+        btnPopUp.setOnClickListener(this);
 
     }
 
@@ -58,6 +62,9 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.btnAssignment:
                 startFragment(new SignatureFragment());
+                break;
+            case R.id.btnPopUp:
+                startFragment(new PopUpFragment());
                 break;
 
         }

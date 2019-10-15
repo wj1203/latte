@@ -125,6 +125,7 @@ public class SignatureView extends View {
     public Bitmap save(Activity activity){
         // 截取屏幕
         Bitmap mScreenshot;
+        // 拿到activit的window对象的decorView
         View activityView = activity.getWindow().getDecorView();
         activityView.setDrawingCacheEnabled(true);
         activityView.destroyDrawingCache();
@@ -133,6 +134,6 @@ public class SignatureView extends View {
         // 返回 经过 裁剪矩形
         Matrix matrix = new Matrix();
         matrix.setRotate(270);
-        return Bitmap.createBitmap(mScreenshot,viewLeft,viewTop,viewWidth,viewHeight,matrix,true);
+        return Bitmap.createBitmap(mScreenshot,viewLeft, 75,viewWidth,viewHeight,matrix,true);
     }
 }
