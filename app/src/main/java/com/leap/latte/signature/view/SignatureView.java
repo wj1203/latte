@@ -1,4 +1,4 @@
-package com.leap.latte.assignment.view;
+package com.leap.latte.signature.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,13 +8,10 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-
-import java.util.ArrayList;
 
 /**
  * @author: leap
@@ -22,7 +19,7 @@ import java.util.ArrayList;
  * @classname: AssignmentView
  * @description: 签名view
  */
-public class AssignmentView extends View {
+public class SignatureView extends View {
 
     private Context context;
     /**图片保存路径*/
@@ -43,14 +40,14 @@ public class AssignmentView extends View {
 
     private Path drawPath;
 
-    public AssignmentView(Context context) {
+    public SignatureView(Context context) {
         super(context);
         init(context);
 
     }
 
 
-    public AssignmentView(Context context, AttributeSet attrs) {
+    public SignatureView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }

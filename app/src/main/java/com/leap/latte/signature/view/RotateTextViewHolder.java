@@ -1,4 +1,4 @@
-package com.leap.latte.assignment.view;
+package com.leap.latte.signature.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

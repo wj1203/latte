@@ -1,4 +1,4 @@
-package com.leap.latte.assignment.view;
+package com.leap.latte.signature.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -13,15 +13,15 @@ import com.qmuiteam.qmui.util.QMUIDisplayHelper;
  * @classname: AssignScrollView
  * @description:  自定义 签名页面 scrollView  内部拦截法
  */
-public class AssignScrollView extends ScrollView {
+public class SignatureScrollView extends ScrollView {
 
     private Context context;
 
-    public AssignScrollView(Context context) {
+    public SignatureScrollView(Context context) {
         super(context);
     }
 
-    public AssignScrollView(Context context, AttributeSet attrs) {
+    public SignatureScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
     }

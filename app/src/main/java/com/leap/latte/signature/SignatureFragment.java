@@ -1,4 +1,4 @@
-package com.leap.latte.assignment;
+package com.leap.latte.signature;
 
 
 import android.graphics.Bitmap;
@@ -8,27 +8,27 @@ import android.view.View;
 import android.widget.ImageView;
 import com.leap.common_lib.BaseFragment;
 import com.leap.latte.R;
-import com.leap.latte.assignment.view.AssignmentView;
-import com.leap.latte.assignment.view.RotateTextViewHolder;
+import com.leap.latte.signature.view.SignatureView;
+import com.leap.latte.signature.view.RotateTextViewHolder;
 
-public class AssignFragment extends BaseFragment {
+public class SignatureFragment extends BaseFragment {
 
     private RotateTextViewHolder rtvClear;
     private RotateTextViewHolder rtvSave;
 
     private ImageView ivResult;
 
-    private AssignmentView assignmentView;
+    private SignatureView signatureView;
 
     private Bitmap bitmap;
 
 
     @Override
     protected View onCreateView() {
-        View root = LayoutInflater.from(getContext()).inflate(R.layout.fragment_assign, null);
+        View root = LayoutInflater.from(getContext()).inflate(R.layout.fragment_signature, null);
         rtvClear = root.findViewById(R.id.rtvClear);
         rtvSave = root.findViewById(R.id.rtvSave);
-        assignmentView = root.findViewById(R.id.assignmentView);
+        signatureView = root.findViewById(R.id.assignmentView);
         ivResult = root.findViewById(R.id.ivResult);
 
         rtvClear.setText("清 除", Color.RED);
@@ -37,14 +37,14 @@ public class AssignFragment extends BaseFragment {
         rtvClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                assignmentView.clear();
+                signatureView.clear();
             }
         });
 
         rtvSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bitmap = assignmentView.save(getActivity());
+                bitmap = signatureView.save(getActivity());
                 ivResult.setImageBitmap(bitmap);
             }
         });
