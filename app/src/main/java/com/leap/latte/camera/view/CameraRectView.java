@@ -74,7 +74,7 @@ public class CameraRectView extends View {
         rectHeight = rectWidth*proportionH/proportionW;
 
         // 计算padding
-        leftPadding = screenWidth/10;
+        leftPadding = (screenWidth-rectWidth)/2;
         topPadding = (screenHeight-rectHeight)/2;
 
         // 相对于viewGroup计算rect的坐标

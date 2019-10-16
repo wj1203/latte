@@ -96,13 +96,13 @@ public class PhotoResultFragment extends BaseFragment {
         Bitmap bitmapRow = Bitmap.createBitmap(bitmap, 0, 0, width, height, m, true);
 
         // 裁剪,计算裁剪的大小，坐标 (计算有问题)
-        mRectHeight = rectHeight*mPicHeight/screenHeight;
-        mRectWidth = rectWidth*mPicWidth/screenWidth;
+        mRectHeight = rectHeight*mPicWidth/screenHeight;
+        mRectWidth = rectWidth*mPicHeight/screenWidth;
 
-        int x = (mPicWidth - mRectWidth)/2;
-        int y = (mPicHeight - mRectHeight)/2;
+        int x = (mPicHeight - mRectWidth)/2;
+        int y = (mPicWidth - mRectHeight)/2;
 
-        Bitmap bitmapCut = Bitmap.createBitmap(bitmapRow,x,y,mRectHeight,mRectWidth);
+        Bitmap bitmapCut = Bitmap.createBitmap(bitmapRow,x,y,mRectWidth,mRectHeight);
 
 
 //        Bitmap bitmapCut = Bitmap.createBitmap(bitmapRow,
