@@ -4,7 +4,7 @@ package com.leap.latte.recyclerview.scrollRecycler;
  * @author: leap
  * @time: 2019/10/15
  * @classname: TouchViewHolderInterface
- * @description:
+ * @description:  定义ViewHolder的规范
  */
 public interface TouchViewHolderInterface {
     //item选中的时候的回调

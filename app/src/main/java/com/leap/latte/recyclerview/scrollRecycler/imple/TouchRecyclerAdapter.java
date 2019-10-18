@@ -50,6 +50,7 @@ public class TouchRecyclerAdapter extends RecyclerView.Adapter implements TouchA
         return dataList.size();
     }
 
+//    拖动回调
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
         String prev = dataList.remove(fromPosition);
@@ -57,6 +58,7 @@ public class TouchRecyclerAdapter extends RecyclerView.Adapter implements TouchA
         notifyItemMoved(fromPosition, toPosition);
     }
 
+    // 滑动回调
     @Override
     public void onItemDismiss(int position) {
         dataList.remove(position);
@@ -64,18 +66,15 @@ public class TouchRecyclerAdapter extends RecyclerView.Adapter implements TouchA
     }
 
     class Holder extends RecyclerView.ViewHolder implements TouchViewHolderInterface{
-
         TextView tvDetail;
         public Holder(@NonNull View itemView) {
             super(itemView);
             tvDetail = itemView.findViewById(R.id.tvDetail);
         }
-
         @Override
         public void onItemSelected() {
             itemView.setBackgroundColor(Color.LTGRAY);
         }
-
         @Override
         public void onItemClear() {
             itemView.setBackgroundColor(0);
