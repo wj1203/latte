@@ -1,6 +1,8 @@
 package com.leap.latte.base;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +27,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     private Button btnRecyclerView;
     private Button btnAssignment;
     private Button btnPopUp;
+    private Button btnScheme;
 
     @Override
     protected View onCreateView() {
@@ -39,6 +42,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         btnRecyclerView = view.findViewById(R.id.btnRecyclerView);
         btnAssignment = view.findViewById(R.id.btnAssignment);
         btnPopUp = view.findViewById(R.id.btnPopUp);
+        btnScheme = view.findViewById(R.id.btnScheme);
 
         topBar.setTitle("latte主页");
 
@@ -47,6 +51,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         btnRecyclerView.setOnClickListener(this);
         btnAssignment.setOnClickListener(this);
         btnPopUp.setOnClickListener(this);
+        btnScheme.setOnClickListener(this);
 
     }
 
@@ -66,8 +71,26 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
             case R.id.btnPopUp:
                 startFragment(new PopUpFragment());
                 break;
+            case R.id.btnScheme:
+                schemeNavigateTo();
+                break;
 
         }
+    }
+
+    private void schemeNavigateTo() {
+        /**
+         * [scheme]://[host]/[path]?[query]
+         *
+         * scheme 代表该Schema 协议名称
+         *
+         * host 代表Schema所作用的地址域
+         *
+         * path 代表Schema指定的页面
+         *
+         * query 要传递的参数
+         * */
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("scheme://host/path")));
     }
 
     @Override

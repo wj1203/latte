@@ -36,8 +36,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <Button
+                android:visibility="gone"
                 android:id="@+id/btnPopUp"
                 android:text="@string/qmui_popup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/btnScheme"
+                android:text="@string/scheme_activity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
