@@ -9,4 +9,5 @@
     <string name="qmui_popup">仿QMUI自定义popUp</string>
     <string name="scheme_activity">scheme跳转协议启动Activity</string>
     <string name="start_scheme_activity">通过scheme协议启动的activity</string>
+    <string name="filePicker">自定义文件选择</string>
 </resources>

@@ -42,8 +42,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <Button
-                android:id="@+id/btnScheme"
-                android:text="@string/scheme_activity"
+            android:id="@+id/btnScheme"
+            android:text="@string/scheme_activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/btnFilePicker"
+                android:text="@string/filePicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>

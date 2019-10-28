@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.leap.common_lib.BaseFragment;
 import com.leap.latte.R;
+import com.leap.latte.filepicker.fragment.FilePickerFragment;
 import com.leap.latte.popup.PopUpFragment;
 import com.leap.latte.signature.SignatureFragment;
 import com.leap.latte.camera.fragment.CameraFragment;
@@ -28,10 +29,11 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     private Button btnAssignment;
     private Button btnPopUp;
     private Button btnScheme;
+    private Button btnFilePicker;
 
     @Override
     protected View onCreateView() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_main,null);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_main, null);
         initView(view);
         return view;
     }
@@ -43,6 +45,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         btnAssignment = view.findViewById(R.id.btnAssignment);
         btnPopUp = view.findViewById(R.id.btnPopUp);
         btnScheme = view.findViewById(R.id.btnScheme);
+        btnFilePicker = view.findViewById(R.id.btnFilePicker);
 
         topBar.setTitle("latte主页");
 
@@ -52,12 +55,13 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         btnAssignment.setOnClickListener(this);
         btnPopUp.setOnClickListener(this);
         btnScheme.setOnClickListener(this);
+        btnFilePicker.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btnCamera:
                 CameraFragment cameraFragment = new CameraFragment();
                 startFragment(cameraFragment);
@@ -73,6 +77,9 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.btnScheme:
                 schemeNavigateTo();
+                break;
+            case R.id.btnFilePicker:
+                startFragment(new FilePickerFragment());
                 break;
 
         }
