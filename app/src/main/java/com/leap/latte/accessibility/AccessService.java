@@ -11,11 +11,12 @@ import java.util.Map;
 public class AccessService extends android.accessibilityservice.AccessibilityService {
 
     private String TAG = "AccessService";
-    private AccessService mService;
+    private static AccessService mService;
     private Map<Integer, Boolean> handleMap = new HashMap<>();
 
     private final int CONTACT_LIST = 0;
     private final int CHAT_LIST = 1;
+    private final int CONFIRM_MONEY = 2;
 
     private int CURRENT = 0;
 
@@ -53,14 +54,37 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
             case CHAT_LIST:
                 fromChatToConfirm(event);
                 break;
+            case CONFIRM_MONEY:
+                confirmGetMoney(event);
+                break;
         }
 
 
 
     }
 
+    /**
+     *  确认收款页面
+     * */
+    private void confirmGetMoney(AccessibilityEvent event) {
+        AccessibilityNodeInfo rootNodes = getRootInActiveWindow();
+        if (rootNodes==null){
+            return;
+        }
+        List<AccessibilityNodeInfo> confirmBtnList = rootNodes.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/efi");
+        for (int i = 0;i<confirmBtnList.size();i++){
+//            Log.d(TAG,confirmBtnList.get(i).getText().toString());
+            if (confirmBtnList.get(i).getText().toString().equals("确认收款")){
+                clickView(confirmBtnList.get(i));
+            }
+        }
+    }
+
     private void setCurrent() {
         AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
+        if (nodeInfo==null){
+            return;
+        }
         // 聊天界面特有node
         List<AccessibilityNodeInfo> aqeList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/aqe");
         if (aqeList.size()>0){
@@ -71,26 +95,48 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
         if (raList.size()>0){
             CURRENT = CONTACT_LIST;
         }
+        // 带确认收款界面
+        List<AccessibilityNodeInfo> efmList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/efm");
+        if (efmList.size()>0){
+            CURRENT = CONFIRM_MONEY;
+        }
     }
 
+
+    /**
+     * 聊天页面到确认收款页面
+     * */
     private void fromChatToConfirm(AccessibilityEvent event) {
         // window下的node
         AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
+        if (nodeInfo==null){
+            return;
+        }
         //  获取转账给你/已收钱/   tvList
         List<AccessibilityNodeInfo> moneyNodes = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/av8");
+        List<AccessibilityNodeInfo> moneyItemNodes = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/at_");
         Log.d(TAG, "聊天界面---转账的个数" + moneyNodes.size());
+        Log.d(TAG, "聊天界面---聊天item的个数" + moneyItemNodes.size());
         for (int i = 0;i<moneyNodes.size();i++){
             AccessibilityNodeInfo  tvMoneyDesNode = moneyNodes.get(i);
 //            Log.d(TAG,tvMoneyDesNode.getText().toString());
             if (tvMoneyDesNode.getText().toString().equals("转账给你")){
 //                Log.d(TAG,"找到 转账给你 ");
+                clickView(tvMoneyDesNode);
             }
         }
     }
 
+
+    /**
+     * 聊天列表到聊天记录
+     * */
     private void fromContactToChat(AccessibilityEvent event) {
         // window下的node
         AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
+        if (nodeInfo==null){
+            return;
+        }
         // 聊天列表 node list
         List<AccessibilityNodeInfo> chatNodes = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/bae");
         List<AccessibilityNodeInfo> textNodes = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/bai");
@@ -134,14 +180,7 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
         return false;
     }
 
-    /**
-     * 是否有红包或者转账
-     */
-    private boolean isNeedClick(AccessibilityNodeInfo nodeInfo) {
-        Log.d(TAG, nodeInfo.getText() + "");
-        List<AccessibilityNodeInfo> transferList = nodeInfo.findAccessibilityNodeInfosByText("[转账]请你确认收款");
-        List<AccessibilityNodeInfo> pocketList = nodeInfo.findAccessibilityNodeInfosByText("[微信红包]");
-        Log.d(TAG, "transferList:" + transferList.size() + "pocketList:" + pocketList.size());
-        return transferList.size() > 0 || pocketList.size() > 0;
+    public static boolean isStart(){
+        return mService != null;
     }
 }

@@ -3,6 +3,7 @@ package com.leap.latte.base;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -86,11 +87,18 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
                 startFragment(new FilePickerFragment());
                 break;
             case R.id.btnAccess:
-//                startFragment();
-                Intent intent = new Intent(getActivity(), AccessService.class);
-                getActivity().startService(intent);
+                goToAccessSetting();
                 break;
 
+        }
+    }
+
+    private void goToAccessSetting() {
+        try {
+            this.startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
+        } catch (Exception e) {
+            this.startActivity(new Intent(Settings.ACTION_SETTINGS));
+            e.printStackTrace();
         }
     }
 
