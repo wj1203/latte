@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.leap.common_lib.BaseFragment;
 import com.leap.latte.R;
+import com.leap.latte.accessibility.AccessService;
 import com.leap.latte.filepicker.fragment.FilePickerFragment;
 import com.leap.latte.popup.PopUpFragment;
 import com.leap.latte.signature.SignatureFragment;
@@ -30,6 +31,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     private Button btnPopUp;
     private Button btnScheme;
     private Button btnFilePicker;
+    private Button btnAccess;
 
     @Override
     protected View onCreateView() {
@@ -46,6 +48,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         btnPopUp = view.findViewById(R.id.btnPopUp);
         btnScheme = view.findViewById(R.id.btnScheme);
         btnFilePicker = view.findViewById(R.id.btnFilePicker);
+        btnAccess = view.findViewById(R.id.btnAccess);
 
         topBar.setTitle("latte主页");
 
@@ -56,6 +59,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         btnPopUp.setOnClickListener(this);
         btnScheme.setOnClickListener(this);
         btnFilePicker.setOnClickListener(this);
+        btnAccess.setOnClickListener(this);
 
     }
 
@@ -80,6 +84,11 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.btnFilePicker:
                 startFragment(new FilePickerFragment());
+                break;
+            case R.id.btnAccess:
+//                startFragment();
+                Intent intent = new Intent(getActivity(), AccessService.class);
+                getActivity().startService(intent);
                 break;
 
         }

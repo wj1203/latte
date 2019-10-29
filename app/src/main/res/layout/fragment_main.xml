@@ -51,6 +51,11 @@
                 android:text="@string/filePicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/btnAccess"
+                android:text="@string/accessibility"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
     </ScrollView>

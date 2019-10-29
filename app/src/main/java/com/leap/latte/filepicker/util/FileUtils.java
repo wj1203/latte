@@ -3,7 +3,6 @@ package com.leap.latte.filepicker.util;
 import com.leap.latte.filepicker.PickerManager;
 import com.leap.latte.filepicker.bean.FileEntity;
 import com.leap.latte.filepicker.bean.FileType;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.text.DecimalFormat;
