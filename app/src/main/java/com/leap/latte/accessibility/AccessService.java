@@ -3,7 +3,7 @@ package com.leap.latte.accessibility;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-
+import android.widget.Toast;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +14,10 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
     private static AccessService mService;
     private Map<Integer, Boolean> handleMap = new HashMap<>();
 
-    private final int CONTACT_LIST = 0;
-    private final int CHAT_LIST = 1;
-    private final int CONFIRM_MONEY = 2;
+    private final int CONTACT_LIST = 0;         // 聊天列表
+    private final int CHAT_LIST = 1;            // 聊天页面
+    private final int CONFIRM_MONEY = 2;        // 确认收款
+    private final int ALREADY_COLLECTED = 3;     // 已收款
 
     private int CURRENT = 0;
 
@@ -24,6 +25,7 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
+        Toast.makeText(getApplicationContext(),"辅助功能开启",Toast.LENGTH_SHORT).show();
         Log.d(TAG, "无障碍服务开启");
         mService = this;
     }
@@ -47,7 +49,7 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
             case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
                 break;
         }
-        switch (CURRENT){
+        switch (CURRENT) {
             case CONTACT_LIST:
                 fromContactToChat(event);
                 break;
@@ -57,84 +59,20 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
             case CONFIRM_MONEY:
                 confirmGetMoney(event);
                 break;
+            case ALREADY_COLLECTED:
+                backToChatList(event);
+                break;
         }
 
 
-
     }
-
     /**
-     *  确认收款页面
-     * */
-    private void confirmGetMoney(AccessibilityEvent event) {
-        AccessibilityNodeInfo rootNodes = getRootInActiveWindow();
-        if (rootNodes==null){
-            return;
-        }
-        List<AccessibilityNodeInfo> confirmBtnList = rootNodes.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/efi");
-        for (int i = 0;i<confirmBtnList.size();i++){
-//            Log.d(TAG,confirmBtnList.get(i).getText().toString());
-            if (confirmBtnList.get(i).getText().toString().equals("确认收款")){
-                clickView(confirmBtnList.get(i));
-            }
-        }
-    }
-
-    private void setCurrent() {
-        AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
-        if (nodeInfo==null){
-            return;
-        }
-        // 聊天界面特有node
-        List<AccessibilityNodeInfo> aqeList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/aqe");
-        if (aqeList.size()>0){
-            CURRENT = CHAT_LIST;
-        }
-        // 联系人聊天列表特有node
-        List<AccessibilityNodeInfo> raList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/ra");
-        if (raList.size()>0){
-            CURRENT = CONTACT_LIST;
-        }
-        // 带确认收款界面
-        List<AccessibilityNodeInfo> efmList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/efm");
-        if (efmList.size()>0){
-            CURRENT = CONFIRM_MONEY;
-        }
-    }
-
-
-    /**
-     * 聊天页面到确认收款页面
-     * */
-    private void fromChatToConfirm(AccessibilityEvent event) {
-        // window下的node
-        AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
-        if (nodeInfo==null){
-            return;
-        }
-        //  获取转账给你/已收钱/   tvList
-        List<AccessibilityNodeInfo> moneyNodes = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/av8");
-        List<AccessibilityNodeInfo> moneyItemNodes = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/at_");
-        Log.d(TAG, "聊天界面---转账的个数" + moneyNodes.size());
-        Log.d(TAG, "聊天界面---聊天item的个数" + moneyItemNodes.size());
-        for (int i = 0;i<moneyNodes.size();i++){
-            AccessibilityNodeInfo  tvMoneyDesNode = moneyNodes.get(i);
-//            Log.d(TAG,tvMoneyDesNode.getText().toString());
-            if (tvMoneyDesNode.getText().toString().equals("转账给你")){
-//                Log.d(TAG,"找到 转账给你 ");
-                clickView(tvMoneyDesNode);
-            }
-        }
-    }
-
-
-    /**
-     * 聊天列表到聊天记录
-     * */
+     * 对话列表
+     */
     private void fromContactToChat(AccessibilityEvent event) {
-        // window下的node
+        Log.d(TAG, "----对话列表页面---");
         AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
-        if (nodeInfo==null){
+        if (nodeInfo == null) {
             return;
         }
         // 聊天列表 node list
@@ -154,13 +92,72 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
     }
 
 
-    @Override
-    public void onInterrupt() {
-        Log.d(TAG, "无障碍服务被中断");
+    /**
+     * 聊天页面
+     */
+    private void fromChatToConfirm(AccessibilityEvent event) {
+        Log.d(TAG, "----聊天页面---");
+        AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
+        if (nodeInfo == null) {
+            return;
+        }
+        //  获取转账给你/已收钱/   tvList
+        List<AccessibilityNodeInfo> moneyNodes = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/av8");
+        Log.d(TAG, "聊天界面---转账的个数" + moneyNodes.size());
+        boolean flag = false;
+        for (int i = 0; i < moneyNodes.size(); i++) {
+            AccessibilityNodeInfo tvMoneyDesNode = moneyNodes.get(i);
+//            Log.d(TAG,tvMoneyDesNode.getText().toString());
+            if (tvMoneyDesNode.getText().toString().equals("转账给你")) {
+//                Log.d(TAG,"找到 转账给你 ");
+                clickView(tvMoneyDesNode);
+                flag = true;
+            }
+        }
+        //  如果没有未转账消息，退出当前聊天页面
+        if (!flag) {
+            List<AccessibilityNodeInfo> backNodeList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/lr");
+            for (int i = 0; i < backNodeList.size(); i++) {
+                clickView(backNodeList.get(i));
+            }
+        }
+    }
+    /**
+     * 确认收款页面
+     */
+    private void confirmGetMoney(AccessibilityEvent event) {
+        Log.d(TAG, "----确认收款页面---");
+        AccessibilityNodeInfo rootNodes = getRootInActiveWindow();
+        if (rootNodes == null) {
+            return;
+        }
+        List<AccessibilityNodeInfo> confirmBtnList = rootNodes.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/efi");
+        for (int i = 0; i < confirmBtnList.size(); i++) {
+//            Log.d(TAG,confirmBtnList.get(i).getText().toString());
+            if (confirmBtnList.get(i).getText().toString().equals("确认收款")) {
+                clickView(confirmBtnList.get(i));
+                CURRENT = ALREADY_COLLECTED;
+            }
+        }
     }
 
     /**
-     * 点击事件
+     * 已收款
+     */
+    private void backToChatList(AccessibilityEvent event) {
+        Log.d(TAG, "----已收款页面---");
+        AccessibilityNodeInfo rootNodes = getRootInActiveWindow();
+        if (rootNodes == null) {
+            return;
+        }
+        List<AccessibilityNodeInfo> backNodeList = rootNodes.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/m0");
+        for (int i = 0; i < backNodeList.size(); i++) {
+            clickView(backNodeList.get(i));
+        }
+    }
+
+    /**
+     * 点击nodeInfo
      */
     public static boolean clickView(AccessibilityNodeInfo nodeInfo) {
         if (nodeInfo != null) {
@@ -180,7 +177,48 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
         return false;
     }
 
-    public static boolean isStart(){
+    public static boolean isStart() {
         return mService != null;
+    }
+
+    /**
+     *  判断当前在哪个页面
+     * */
+    private void setCurrent() {
+        AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
+        if (nodeInfo == null) {
+            return;
+        }
+        // 聊天界面特有node
+        List<AccessibilityNodeInfo> aqeList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/aqe");
+        if (aqeList.size() > 0) {
+            CURRENT = CHAT_LIST;
+        }
+        // 联系人聊天列表特有node
+        List<AccessibilityNodeInfo> raList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/ra");
+        if (raList.size() > 0) {
+            CURRENT = CONTACT_LIST;
+        }
+        // 待确认收款界面
+        List<AccessibilityNodeInfo> efmList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/efm");
+        if (efmList.size() > 0) {
+            CURRENT = CONFIRM_MONEY;
+        }
+        //  已收款页面
+        List<AccessibilityNodeInfo> eepList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/eep");
+        if (eepList.size() > 0) {
+            CURRENT = ALREADY_COLLECTED;
+        }
+    }
+
+    @Override
+    public void onInterrupt() {
+        Log.d(TAG, "无障碍服务被中断");
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG,"服务被终止");
+        Toast.makeText(getApplicationContext(),"辅助功能被停止",Toast.LENGTH_SHORT).show();
     }
 }
