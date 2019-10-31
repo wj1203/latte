@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Toast;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
-        Toast.makeText(getApplicationContext(),"辅助功能开启",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "辅助功能开启", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "无障碍服务开启");
         mService = this;
     }
@@ -49,6 +50,32 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
             case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
                 break;
         }
+
+        autoGetMoney(event);
+
+        clickOpenRedPocketAndReturnToChat();
+
+    }
+
+    private void clickOpenRedPocketAndReturnToChat() {
+        AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
+        if (nodeInfo == null) {
+            return;
+        }
+        List<AccessibilityNodeInfo> openNodeList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/da7");
+        for (AccessibilityNodeInfo openNode:openNodeList){
+            clickView(openNode);
+        }
+
+        List<AccessibilityNodeInfo> backNodeList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/m0");
+        for (AccessibilityNodeInfo backNode:backNodeList){
+            clickView(backNode);
+        }
+
+    }
+
+
+    private void autoGetMoney(AccessibilityEvent event) {
         switch (CURRENT) {
             case CONTACT_LIST:
                 fromContactToChat(event);
@@ -64,8 +91,8 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
                 break;
         }
 
-
     }
+
     /**
      * 对话列表
      */
@@ -82,7 +109,7 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
         for (int i = 0; i < textNodes.size(); i++) {
             AccessibilityNodeInfo textNode = textNodes.get(i);
 //            Log.d(TAG,textNode.getText().toString());
-            if (textNode.getText().toString().equals("[转账]请你确认收款")) {
+            if (textNode.getText().toString().contains("[转账]")) {
                 Log.d(TAG, "点击第" + i + " 进入聊天页面");
                 //  点击进入收款联系人聊天界面
                 clickView(chatNodes.get(i));
@@ -101,27 +128,43 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
         if (nodeInfo == null) {
             return;
         }
-        //  获取转账给你/已收钱/   tvList
-        List<AccessibilityNodeInfo> moneyNodes = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/av8");
-        Log.d(TAG, "聊天界面---转账的个数" + moneyNodes.size());
-        boolean flag = false;
-        for (int i = 0; i < moneyNodes.size(); i++) {
-            AccessibilityNodeInfo tvMoneyDesNode = moneyNodes.get(i);
-//            Log.d(TAG,tvMoneyDesNode.getText().toString());
-            if (tvMoneyDesNode.getText().toString().equals("转账给你")) {
-//                Log.d(TAG,"找到 转账给你 ");
-                clickView(tvMoneyDesNode);
-                flag = true;
+        // 获取红包和转账节点
+        List<AccessibilityNodeInfo> transferNodes = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/av7");
+        List<AccessibilityNodeInfo> pocketNodes = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/aui");
+        for (int i = 0; i < transferNodes.size(); i++) {
+            if (!transferNodes.get(i).getParent().getChild(1).getText().toString().contains("已")) {
+                clickView(transferNodes.get(i));
             }
         }
-        //  如果没有未转账消息，退出当前聊天页面
-        if (!flag) {
-            List<AccessibilityNodeInfo> backNodeList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/lr");
-            for (int i = 0; i < backNodeList.size(); i++) {
-                clickView(backNodeList.get(i));
+        for (int i = 0;i<pocketNodes.size();i++){
+            if (!pocketNodes.get(i).getParent().getChild(1).toString().contains("已")){
+                clickView(pocketNodes.get(i));
             }
         }
+//        //  获取转账给你/已收钱/   tvList
+//        List<AccessibilityNodeInfo> moneyNodes = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/av8");
+//        Log.d(TAG, "聊天界面---转账的个数" + moneyNodes.size());
+//        boolean flag = false;
+//        for (int i = 0; i < moneyNodes.size(); i++) {
+//            AccessibilityNodeInfo tvMoneyDesNode = moneyNodes.get(i);
+////            Log.d(TAG,tvMoneyDesNode.getText().toString());
+//            if (tvMoneyDesNode.getText().toString().contains("转账给你")) {
+////                Log.d(TAG,"找到 转账给你 ");
+//                clickView(tvMoneyDesNode);
+//                flag = true;
+//            }
+//        }
+//        //  如果没有未转账消息，退出当前聊天页面
+//        if (!flag) {
+//            List<AccessibilityNodeInfo> backNodeList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/lr");
+//            for (int i = 0; i < backNodeList.size(); i++) {
+//                clickView(backNodeList.get(i));
+//            }
+//        }
     }
+
+
+
     /**
      * 确认收款页面
      */
@@ -182,8 +225,8 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
     }
 
     /**
-     *  判断当前在哪个页面
-     * */
+     * 判断当前在哪个页面
+     */
     private void setCurrent() {
         AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
         if (nodeInfo == null) {
@@ -215,10 +258,11 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
     public void onInterrupt() {
         Log.d(TAG, "无障碍服务被中断");
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(TAG,"服务被终止");
-        Toast.makeText(getApplicationContext(),"辅助功能被停止",Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "服务被终止");
+        Toast.makeText(getApplicationContext(), "辅助功能被停止", Toast.LENGTH_SHORT).show();
     }
 }
