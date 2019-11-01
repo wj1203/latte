@@ -1,5 +1,6 @@
 package com.leap.latte.accessibility;
 
+import android.accessibilityservice.AccessibilityService;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -13,12 +14,13 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
 
     private String TAG = "AccessService";
     private static AccessService mService;
-    private Map<Integer, Boolean> handleMap = new HashMap<>();
 
     private final int CONTACT_LIST = 0;         // 聊天列表
     private final int CHAT_LIST = 1;            // 聊天页面
     private final int CONFIRM_MONEY = 2;        // 确认收款
     private final int ALREADY_COLLECTED = 3;     // 已收款
+    private final int RECEIVED_POCKET = 4;     // 已收红包
+
 
     private int CURRENT = 0;
 
@@ -39,156 +41,74 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
      */
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        setCurrent();
-//        Log.d(TAG,"当前页面"+CURRENT);
         int eventType = event.getEventType();
         switch (eventType) {
             case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:
+                Log.d(TAG,"notification change");
                 break;
             case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
+                Log.d(TAG,"TYPE_WINDOW_STATE_CHANGED");
                 break;
             case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
                 break;
         }
+        setCurrent(event);
 
-        autoGetMoney(event);
+        switch (CURRENT) {
+            case CONTACT_LIST:
+                break;
+            case CHAT_LIST:
+                clickOpenRedPocketAndReturnToChat();
+                break;
+            case CONFIRM_MONEY:
+                break;
+            case ALREADY_COLLECTED:
+                break;
+            case RECEIVED_POCKET:
+                fronReceivedPocketToChat(event);
+                break;
+        }
 
-        clickOpenRedPocketAndReturnToChat();
 
     }
 
     private void clickOpenRedPocketAndReturnToChat() {
+        boolean haveNotReceivedPocket = false;
         AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
         if (nodeInfo == null) {
             return;
         }
+        //   红包聊天记录节点
+        List<AccessibilityNodeInfo> pocketNodes = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/aui");
+        for (int i = 0; i < pocketNodes.size(); i++) {
+            //  如果这个节点没有 已领取  点击这个红包
+            if (pocketNodes.get(i).getParent() != null) {
+                if (!pocketNodes.get(i).getParent().getChild(1).getText().toString().contains("已领取")) {
+                    haveNotReceivedPocket = true;
+                    clickView(pocketNodes.get(i));
+                }
+            }
+        }
+        //   红包的  开
         List<AccessibilityNodeInfo> openNodeList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/da7");
-        for (AccessibilityNodeInfo openNode:openNodeList){
+        for (AccessibilityNodeInfo openNode : openNodeList) {
             clickView(openNode);
         }
 
-        List<AccessibilityNodeInfo> backNodeList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/m0");
-        for (AccessibilityNodeInfo backNode:backNodeList){
-            clickView(backNode);
-        }
-
-    }
-
-
-    private void autoGetMoney(AccessibilityEvent event) {
-        switch (CURRENT) {
-            case CONTACT_LIST:
-                fromContactToChat(event);
-                break;
-            case CHAT_LIST:
-                fromChatToConfirm(event);
-                break;
-            case CONFIRM_MONEY:
-                confirmGetMoney(event);
-                break;
-            case ALREADY_COLLECTED:
-                backToChatList(event);
-                break;
-        }
-
-    }
-
-    /**
-     * 对话列表
-     */
-    private void fromContactToChat(AccessibilityEvent event) {
-        Log.d(TAG, "----对话列表页面---");
-        AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
-        if (nodeInfo == null) {
-            return;
-        }
-        // 聊天列表 node list
-        List<AccessibilityNodeInfo> chatNodes = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/bae");
-        List<AccessibilityNodeInfo> textNodes = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/bai");
-        Log.d(TAG, "联系人界面   聊天窗口/提示文字 ：" + chatNodes.size() + "  " + textNodes.size());
-        for (int i = 0; i < textNodes.size(); i++) {
-            AccessibilityNodeInfo textNode = textNodes.get(i);
-//            Log.d(TAG,textNode.getText().toString());
-            if (textNode.getText().toString().contains("[转账]")) {
-                Log.d(TAG, "点击第" + i + " 进入聊天页面");
-                //  点击进入收款联系人聊天界面
-                clickView(chatNodes.get(i));
-                CURRENT = CHAT_LIST;
+        //   如果没有可领取红包，退出聊天界面
+        if (!haveNotReceivedPocket) {
+            List<AccessibilityNodeInfo> backMainList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/lr");
+            for (AccessibilityNodeInfo backMainNode:backMainList){
+                if (clickView(backMainNode)){
+                    break;
+                }
             }
         }
     }
 
 
-    /**
-     * 聊天页面
-     */
-    private void fromChatToConfirm(AccessibilityEvent event) {
-        Log.d(TAG, "----聊天页面---");
-        AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
-        if (nodeInfo == null) {
-            return;
-        }
-        // 获取红包和转账节点
-        List<AccessibilityNodeInfo> transferNodes = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/av7");
-        List<AccessibilityNodeInfo> pocketNodes = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/aui");
-        for (int i = 0; i < transferNodes.size(); i++) {
-            if (!transferNodes.get(i).getParent().getChild(1).getText().toString().contains("已")) {
-                clickView(transferNodes.get(i));
-            }
-        }
-        for (int i = 0;i<pocketNodes.size();i++){
-            if (!pocketNodes.get(i).getParent().getChild(1).toString().contains("已")){
-                clickView(pocketNodes.get(i));
-            }
-        }
-//        //  获取转账给你/已收钱/   tvList
-//        List<AccessibilityNodeInfo> moneyNodes = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/av8");
-//        Log.d(TAG, "聊天界面---转账的个数" + moneyNodes.size());
-//        boolean flag = false;
-//        for (int i = 0; i < moneyNodes.size(); i++) {
-//            AccessibilityNodeInfo tvMoneyDesNode = moneyNodes.get(i);
-////            Log.d(TAG,tvMoneyDesNode.getText().toString());
-//            if (tvMoneyDesNode.getText().toString().contains("转账给你")) {
-////                Log.d(TAG,"找到 转账给你 ");
-//                clickView(tvMoneyDesNode);
-//                flag = true;
-//            }
-//        }
-//        //  如果没有未转账消息，退出当前聊天页面
-//        if (!flag) {
-//            List<AccessibilityNodeInfo> backNodeList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/lr");
-//            for (int i = 0; i < backNodeList.size(); i++) {
-//                clickView(backNodeList.get(i));
-//            }
-//        }
-    }
-
-
-
-    /**
-     * 确认收款页面
-     */
-    private void confirmGetMoney(AccessibilityEvent event) {
-        Log.d(TAG, "----确认收款页面---");
-        AccessibilityNodeInfo rootNodes = getRootInActiveWindow();
-        if (rootNodes == null) {
-            return;
-        }
-        List<AccessibilityNodeInfo> confirmBtnList = rootNodes.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/efi");
-        for (int i = 0; i < confirmBtnList.size(); i++) {
-//            Log.d(TAG,confirmBtnList.get(i).getText().toString());
-            if (confirmBtnList.get(i).getText().toString().equals("确认收款")) {
-                clickView(confirmBtnList.get(i));
-                CURRENT = ALREADY_COLLECTED;
-            }
-        }
-    }
-
-    /**
-     * 已收款
-     */
-    private void backToChatList(AccessibilityEvent event) {
-        Log.d(TAG, "----已收款页面---");
+    private void fronReceivedPocketToChat(AccessibilityEvent event) {
+//        this.performGlobalAction(GLOBAL_ACTION_BACK);//类似于点击导航上的返回按钮
         AccessibilityNodeInfo rootNodes = getRootInActiveWindow();
         if (rootNodes == null) {
             return;
@@ -198,6 +118,8 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
             clickView(backNodeList.get(i));
         }
     }
+
+
 
     /**
      * 点击nodeInfo
@@ -226,8 +148,9 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
 
     /**
      * 判断当前在哪个页面
+     * @param event
      */
-    private void setCurrent() {
+    private void setCurrent(AccessibilityEvent event) {
         AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
         if (nodeInfo == null) {
             return;
@@ -252,13 +175,20 @@ public class AccessService extends android.accessibilityservice.AccessibilitySer
         if (eepList.size() > 0) {
             CURRENT = ALREADY_COLLECTED;
         }
+
+        //  已收红包页面
+        List<AccessibilityNodeInfo> d6dList = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/d6d");
+        if (d6dList.size() > 0) {
+            CURRENT = RECEIVED_POCKET;
+        }
     }
+
+
 
     @Override
     public void onInterrupt() {
         Log.d(TAG, "无障碍服务被中断");
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
