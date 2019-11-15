@@ -1,14 +1,10 @@
 package com.leap.latte.accessibility;
 
-import android.accessibilityservice.AccessibilityService;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Toast;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AccessService extends android.accessibilityservice.AccessibilityService {
 

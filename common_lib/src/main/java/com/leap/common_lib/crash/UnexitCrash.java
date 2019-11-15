@@ -15,7 +15,6 @@ import android.os.Looper;
 public class UnexitCrash {
 
     public interface ExceptionHandler {
-
         void handlerException(Thread thread, Throwable throwable);
     }
 
@@ -32,9 +31,9 @@ public class UnexitCrash {
      * exceptionHandler.handlerException可能运行在非UI线程中。
      * <p>
      * 若设置了Thread.setDefaultUncaughtExceptionHandler则可能无法捕获子线程异常。
-     *
      * @param exceptionHandler
      */
+
     public static synchronized void install(ExceptionHandler exceptionHandler) {
         if (sInstalled) {
             return;
@@ -45,7 +44,6 @@ public class UnexitCrash {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-
                 while (true) {
                     try {
                         Looper.loop();

@@ -6,6 +6,7 @@
     <TextView
         android:gravity="center"
         android:textSize="24sp"
+        android:id="@+id/tv"
         android:text="@string/scheme_activity"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
