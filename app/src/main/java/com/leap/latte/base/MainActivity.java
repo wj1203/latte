@@ -10,6 +10,8 @@ import android.os.Bundle;
 import com.leap.common_lib.BaseActivity;
 import com.leap.latte.R;
 
+import okhttp3.OkHttpClient;
+
 public class MainActivity extends BaseActivity {
 
     @Override

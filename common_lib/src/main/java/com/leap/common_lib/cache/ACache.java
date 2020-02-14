@@ -22,6 +22,7 @@ import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.widget.LinearLayout;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -57,11 +58,9 @@ public class ACache {
     private static final int MAX_COUNT = Integer.MAX_VALUE; // 不限制存放数据的数量
     private static Map<String, ACache> mInstanceMap = new HashMap<String, ACache>();
     private ACacheManager mCache;
-
     public static ACache get(Context ctx) {
         return get(ctx, "ZcACache");
     }
-
     public static ACache get(Context ctx, String cacheName) {
         //konglu:创建目录，解决空指针问题
 //        File file = new File(ctx.getExternalFilesDir(null).getPath() + "/zc_data_support/");
