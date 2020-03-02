@@ -43,7 +43,7 @@ class GradualViewGroup(context: Context?, attrs: AttributeSet?) : ViewGroup(cont
                 for(i in 0..childCount){
                     val child = getChildAt(i)
                     var offset = child.measuredWidth + i * OFFSET
-                    width = Math.max(offset,width)
+                    width = offset.coerceAtLeast(width)
                 }
             }
             else -> {}
